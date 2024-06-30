@@ -1,0 +1,9 @@
+{
+  "onboardingScreen": {
+    "title": "step.fun"
+  },
+  "continue": "Continue",
+  "skip": "Skip",
+  "example": "Example",
+  "done": "Done"
+}

@@ -1,7 +1,6 @@
 import i18n, { ResourceKey } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import translations from '../translations';
-import { Native } from 'sentry-expo';
 import 'intl-pluralrules';
 import { logger } from './logger';
 
@@ -28,57 +27,6 @@ interface SupportedLanguages {
 
 export const SUPPORTED_LANGUAGES: SupportedLanguages = {
   en: { languageCode: 'en', nativeName: 'English', englishName: 'English' },
-  es: { languageCode: 'es', nativeName: 'Español', englishName: 'Spanish' },
-  fr: { languageCode: 'fr', nativeName: 'Français', englishName: 'French' },
-  'zh-CN': {
-    languageCode: 'zh-CN',
-    nativeName: '简体中文',
-    englishName: 'Simplified Chinese',
-  },
-  'zh-TW': {
-    languageCode: 'zh-TW',
-    nativeName: '繁體中文',
-    englishName: 'Traditional Chinese',
-  },
-  ar: { languageCode: 'ar', nativeName: 'العربية', englishName: 'Arabic' },
-  bn: { languageCode: 'bn', nativeName: 'বাংলা', englishName: 'Bengali' },
-  hi: { languageCode: 'hi', nativeName: 'हिन्दी', englishName: 'Hindi' },
-  ru: { languageCode: 'ru', nativeName: 'Русский', englishName: 'Russian' },
-  pt: {
-    languageCode: 'pt',
-    nativeName: 'Português',
-    englishName: 'Portuguese',
-  },
-  ja: { languageCode: 'ja', nativeName: '日本語', englishName: 'Japanese' },
-  de: { languageCode: 'de', nativeName: 'Deutsch', englishName: 'German' },
-  it: { languageCode: 'it', nativeName: 'Italiano', englishName: 'Italian' },
-  id: {
-    languageCode: 'id',
-    nativeName: 'Indonesia',
-    englishName: 'Indonesian',
-  },
-  ur: { languageCode: 'ur', nativeName: 'اردو', englishName: 'Urdu' },
-  pl: { languageCode: 'pl', nativeName: 'Polski', englishName: 'Polish' },
-  uk: {
-    languageCode: 'uk',
-    nativeName: 'Українська',
-    englishName: 'Ukrainian',
-  },
-  fa: { languageCode: 'fa', nativeName: 'فارسی', englishName: 'Persian' },
-  ml: { languageCode: 'ml', nativeName: 'മലയാളം', englishName: 'Malayalam' },
-  kn: { languageCode: 'kn', nativeName: 'ಕನ್ನಡ', englishName: 'Kannada' },
-  pa: { languageCode: 'pa', nativeName: 'ਪੰਜਾਬੀ', englishName: 'Punjabi' },
-  ro: { languageCode: 'ro', nativeName: 'Română', englishName: 'Romanian' },
-  gu: { languageCode: 'gu', nativeName: 'ગુજરાતી', englishName: 'Gujarati' },
-  or: { languageCode: 'or', nativeName: 'ଓଡ଼ିଆ', englishName: 'Odia' },
-  sd: { languageCode: 'sd', nativeName: 'سنڌي', englishName: 'Sindhi' },
-  mr: { languageCode: 'mr', nativeName: 'मराठी', englishName: 'Marathi' },
-  te: { languageCode: 'te', nativeName: 'తెలుగు', englishName: 'Telugu' },
-  ta: { languageCode: 'ta', nativeName: 'தமிழ்', englishName: 'Tamil' },
-  th: { languageCode: 'th', nativeName: 'ไทย', englishName: 'Thai' },
-  nl: { languageCode: 'nl', nativeName: 'Nederlands', englishName: 'Dutch' },
-  tr: { languageCode: 'tr', nativeName: 'Türkçe', englishName: 'Turkish' },
-  ko: { languageCode: 'ko', nativeName: '한국어', englishName: 'Korean' },
 };
 
 // Initialize i18n
@@ -131,10 +79,10 @@ export const changeAppLanguage = (languageCode: string) => {
   }
 
   if (parsedLanguageCode in SUPPORTED_LANGUAGES) {
-    logger.debug('Changing language to:', { parsedLanguageCode });
+    // logger.debug('Changing language to:', { parsedLanguageCode });
     i18n.changeLanguage(parsedLanguageCode);
   } else {
-    logger.error('Language not supported', { parsedLanguageCode });
+    // logger.error('Language not supported', { parsedLanguageCode });
   }
 };
 

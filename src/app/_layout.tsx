@@ -13,17 +13,9 @@ import * as SplashScreen from 'expo-splash-screen';
 import 'intl-pluralrules';
 import { useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native';
-import 'react-native-polyfill-globals/auto';
-import * as Sentry from 'sentry-expo';
 import { TamaguiProvider, Theme } from 'tamagui';
 import config from '../../tamagui.config';
 import { changeAppLanguage } from '../i18n.config';
-
-// Sentry.init({
-//   dsn: '',
-//   // enableInExpoDevelopment: true,
-//   debug: process.env.NODE_ENV === 'development',
-// });
 
 const queryClient = new QueryClient();
 

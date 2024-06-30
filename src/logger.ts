@@ -1,7 +1,8 @@
-import { Native } from 'sentry-expo';
-import type { SeverityLevel, Extras as SentryExtras } from '@sentry/types';
+// import { Native } from 'sentry-expo';
+// import type { SeverityLevel, Extras as SentryExtras } from '@sentry/types';
 
-type Extras = SentryExtras | Error;
+// type Extras = SentryExtras | Error;
+type Extras = Error;
 
 class Logger {
   constructor() {}
@@ -13,15 +14,15 @@ class Logger {
    * @param extra
    */
   public message(
-    logLevel: SeverityLevel,
+    logLevel: string, //SeverityLevel,
     message: string,
     _extra?: Extras,
   ): void {
     const extra = _extra instanceof Error ? { error: _extra } : _extra; // Allow passing Error to logger.error
 
-    if (logLevel != 'debug') {
-      Native.captureMessage(message, { level: logLevel, extra });
-    }
+    // if (logLevel != 'debug') {
+    //   Native.captureMessage(message, { level: logLevel, extra });
+    // }
 
     if (process.env.NODE_ENV === 'development') {
       console.log('[logger]', message, extra);

@@ -53,28 +53,16 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         },
       },
     ],
-    'sentry-expo',
   ],
   extra: {
     router: {
       origin: false,
     },
-    eas: {
-      projectId: '', // TOFIX: ADD
-    },
+    // eas: {
+    //   projectId: '', // TOFIX: ADD
+    // },
   },
-  hooks: {
-    postPublish: [
-      {
-        file: 'sentry-expo/upload-sourcemaps',
-        config: {
-          organization: 'miseenplace',
-          project: 'step-fun',
-        },
-      },
-    ],
-  },
-  updates: {
-    url: 'TODO-ADD',
-  },
+  // updates: {
+  //   url: 'TODO-ADD',
+  // },
 });

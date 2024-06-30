@@ -1,12 +1,10 @@
 import { Redirect, Stack, router } from 'expo-router';
 import { useEffect } from 'react';
 import { Button, Platform } from 'react-native';
-import Purchases from 'react-native-purchases';
 import { Text } from 'tamagui';
 
 import { useTranslation } from 'react-i18next';
 import i18n, { changeAppLanguage } from '../../i18n.config';
-import { Native } from 'sentry-expo';
 
 export default function AppLayout() {
   const { t } = useTranslation();

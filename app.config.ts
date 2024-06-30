@@ -32,6 +32,19 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     config: {
       usesNonExemptEncryption: false,
     },
+    infoPlist: {
+      LSApplicationQueriesSchemes: [
+        'metamask',
+        'trust',
+        'safe',
+        'rainbow',
+        'uniswap',
+        // Add other wallet schemes names here
+      ],
+    },
+    entitlements: {
+      'com.apple.developer.healthkit': ['HKQuantityTypeIdentifierStepCount'],
+    },
   },
   android: {
     package: 'fun.step.app',
@@ -43,6 +56,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     userInterfaceStyle: 'automatic',
   },
   plugins: [
+    'react-native-health',
+    [
+      'react-native-health',
+      {
+        healthSharePermission: 'Allow step.fun to access your health data',
+      },
+    ],
     'expo-router',
     'expo-localization',
     [

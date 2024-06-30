@@ -1,3 +1,7 @@
+// eslint-disable import/no-unresolved
+import '@walletconnect/react-native-compat';
+import 'intl-pluralrules';
+
 import {
   DarkTheme,
   DefaultTheme,
@@ -10,16 +14,53 @@ import { getLocales } from 'expo-localization';
 import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 
-import 'intl-pluralrules';
+import { base, mainnet } from '@wagmi/core/chains';
+import {
+  Web3Modal,
+  createWeb3Modal,
+  defaultWagmiConfig,
+} from '@web3modal/wagmi-react-native';
 import { useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native';
 import { TamaguiProvider, Theme } from 'tamagui';
+import { WagmiProvider } from 'wagmi';
 import config from '../../tamagui.config';
 import { changeAppLanguage } from '../i18n.config';
 
-const queryClient = new QueryClient();
-
 SplashScreen.preventAutoHideAsync();
+
+// Walletconnect setup
+const queryClient = new QueryClient();
+const projectId = 'a914941e1da15f31b74afb7d6051d80a';
+const metadata = {
+  name: 'step.fun',
+  description: 'compete in a step competition',
+  url: 'https://web3modal.com',
+  icons: ['https://avatars.githubusercontent.com/u/37784886'],
+  redirect: {
+    native: 'step-fun://',
+  },
+};
+
+const chains = [mainnet, base] as const;
+
+const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
+
+// 3. Create modal
+createWeb3Modal({
+  projectId,
+  wagmiConfig,
+  defaultChain: mainnet,
+  enableAnalytics: true, // Optional - defaults to your Cloud configuration
+  tokens: {
+    1: {
+      address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+    },
+    8453: {
+      address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', // USDC
+    },
+  },
+});
 
 export default function Layout() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -61,16 +102,19 @@ export default function Layout() {
     return null;
   }
   return (
-    <QueryClientProvider client={queryClient}>
-      <TamaguiProvider config={config}>
-        <Theme name={colorScheme}>
-          <ThemeProvider
-            value={colorScheme === 'light' ? DefaultTheme : DarkTheme}
-          >
-            <Slot />
-          </ThemeProvider>
-        </Theme>
-      </TamaguiProvider>
-    </QueryClientProvider>
+    <WagmiProvider config={wagmiConfig}>
+      <QueryClientProvider client={queryClient}>
+        <TamaguiProvider config={config}>
+          <Theme name={colorScheme}>
+            <ThemeProvider
+              value={colorScheme === 'light' ? DefaultTheme : DarkTheme}
+            >
+              <Slot />
+              <Web3Modal />
+            </ThemeProvider>
+          </Theme>
+        </TamaguiProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
   );
 }

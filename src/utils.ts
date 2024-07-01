@@ -1,7 +1,5 @@
 import dayjs from 'dayjs';
 
-import { EMOJI_BG_COLORS } from '../constants';
-
 export const titleCase = (str: string) =>
   `${str[0].toUpperCase()}${str.slice(1).toLowerCase()}`;
 
@@ -56,11 +54,3 @@ export function timeAgo(isoDate: string): string {
 
   return `${diffInSeconds} second${interval === 1 ? '' : 's'} ago`;
 }
-
-export const getColorForEmoji = (emoji: string) => {
-  // use the emoji char code to get a color, deterministic for each emoji
-  const emojiCharCode = emoji ? emoji.charCodeAt(0) : 0;
-  const colorIndex = emojiCharCode % EMOJI_BG_COLORS.length;
-  const color = EMOJI_BG_COLORS[colorIndex];
-  return color;
-};

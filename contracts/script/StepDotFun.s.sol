@@ -16,3 +16,5 @@ contract StepDotFunScript is Script {
     }
 }
 // https://base.org/images/ocs/buildersummer_og.png
+
+// Nouns Walk Club,https://unblock.net/wp-content/uploads/2021/11/nouns-dao-review-650x325.png,,1720068875,1720673675,5,0

@@ -102,23 +102,15 @@ contract StepDotFun {
         emit PrizeClaimed(competitionId, winnerAddress, prizeAmount);
     }
 
-    function getCompetitions() public view returns (string[] memory, string[] memory, uint256[] memory, uint256[] memory, uint256[] memory) {
-        uint256 length = competitionCount; // Use competitionCount instead of competitions.length
-        string[] memory names = new string[](length);
-        string[] memory bannerImageUrls = new string[](length);
-        uint256[] memory startTimes = new uint256[](length);
-        uint256[] memory endTimes = new uint256[](length);
-        uint256[] memory entryFees = new uint256[](length);
+    // Update the getCompetitions function to return an array of Competition structs in memory
+    function getCompetitions() public view returns (Competition[] memory) {
+        Competition[] memory allCompetitions = new Competition[](competitionCount);
 
-        for (uint256 i = 0; i < length; i++) {
-            names[i] = competitions[i].name;
-            bannerImageUrls[i] = competitions[i].bannerImageUrl;
-            startTimes[i] = competitions[i].startTime;
-            endTimes[i] = competitions[i].endTime;
-            entryFees[i] = competitions[i].entryFeeUSD;
+        for (uint256 i = 0; i < competitionCount; i++) {
+            allCompetitions[i] = competitions[i];
         }
 
-        return (names, bannerImageUrls, startTimes, endTimes, entryFees);
+        return allCompetitions;
     }
 
     function getCompetition(uint256 competitionId) public view returns (Competition memory, address[] memory) {

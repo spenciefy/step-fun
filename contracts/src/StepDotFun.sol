@@ -75,6 +75,7 @@ contract StepDotFun {
         emit CompetitionCreated(competitionId, startTime, endTime, entryFeeUSD);
     }
 
+    // TODO: need to check for USDC approval for the transferFrom to work
     function joinCompetition(uint256 competitionId, string calldata playerName) public {
         Competition storage competition = competitions[competitionId];
         if (block.timestamp < competition.startTime || block.timestamp > competition.endTime) {
@@ -84,7 +85,8 @@ contract StepDotFun {
             revert AlreadyJoined();
         }
 
-        usdcToken.transferFrom(msg.sender, address(this), competition.entryFeeUSD);
+        // USDC has 6 decimals
+        usdcToken.transferFrom(msg.sender, address(this), competition.entryFeeUSD * (10 ** 6));
         competition.playerAddresses.push(msg.sender); // Add player's address to the array
 
         competition.totalBalance += competition.entryFeeUSD;

@@ -13,7 +13,7 @@ import {
   useWriteContract,
 } from 'wagmi';
 import { Competition } from '../(tabs)';
-import { STEP_DOT_FUN_CONTRACT_ADDRESS } from '../../constants';
+import { BASE_CHAIN_ID, STEP_DOT_FUN_CONTRACT_ADDRESS } from '../../constants';
 import { STEP_DOT_FUN_CONTRACT_ABI } from '../../stepDotFunContractABI';
 
 export default function CompetitionDetailScreen() {
@@ -80,22 +80,18 @@ export default function CompetitionDetailScreen() {
       return;
     }
 
-    signMessage({
-      message:
-        "Join competition (this should be a txn but i couldn't get the deep link to work)",
+    // TODO: check for USDC approval otherwise this will revert
+    // FIXME: works to deeplink to rainbow, but not uniswap wallet
+    writeContract({
+      address: STEP_DOT_FUN_CONTRACT_ADDRESS,
+      abi: STEP_DOT_FUN_CONTRACT_ABI,
+      chainId: BASE_CHAIN_ID,
+      functionName: 'joinCompetition',
+      args: [
+        BigInt(competition.id),
+        'Spencer', // FIXME: update name
+      ],
     });
-    console.log('calling sign contract', BigInt(competition.id));
-    // FIXME: frustrating - this doesn't open the wallet even after i manually added the token approval so the write doesnt revert
-    // writeContract({
-    //   address: STEP_DOT_FUN_CONTRACT_ADDRESS,
-    //   abi: STEP_DOT_FUN_CONTRACT_ABI,
-    //   chainId: BASE_CHAIN_ID,
-    //   functionName: 'joinCompetition',
-    //   args: [
-    //     BigInt(competition.id),
-    //     'Spencer', // FIXME: update name
-    //   ],
-    // });
   };
 
   return (

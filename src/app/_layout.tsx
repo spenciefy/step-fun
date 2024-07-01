@@ -135,6 +135,14 @@ export default function Layout() {
             >
               <Stack>
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen
+                  name="competitionDetail/[id]"
+                  options={{
+                    // Set the presentation mode to modal for our modal route.
+                    presentation: 'modal',
+                    headerShown: false,
+                  }}
+                />
               </Stack>
               <Web3Modal />
             </ThemeProvider>

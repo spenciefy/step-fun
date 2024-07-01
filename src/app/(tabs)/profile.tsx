@@ -49,7 +49,7 @@ export default function ProfileScreen() {
   const queryClient = useQueryClient();
   const { t } = useTranslation();
   const router = useRouter();
-  const { bottom } = useSafeAreaInsets();
+  const { top } = useSafeAreaInsets();
   const { systemBackground } = useStyle();
   const { open } = useWeb3Modal();
   const { walletInfo } = useWalletInfo();
@@ -156,8 +156,13 @@ export default function ProfileScreen() {
   };
 
   return (
-    <YStack flex={1} backgroundColor={systemBackground}>
+    <YStack flex={1} backgroundColor={systemBackground} pt={top}>
       <ScrollView flex={1} p={16}>
+        <XStack mb={20}>
+          <Text fontSize={30} fontWeight={'bold'}>
+            Profile
+          </Text>
+        </XStack>
         <YStack gap={16}>
           <XStack alignItems="center" gap={16}>
             <Circle size={100} bg={'lightgrey'} />

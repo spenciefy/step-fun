@@ -9,6 +9,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Competitions',
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <FontAwesome6 size={24} name="person-walking" color={color} />
           ),
@@ -18,6 +19,7 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: 'Profile',
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <FontAwesome6 size={24} name="wallet" color={color} />
           ),

@@ -32,6 +32,7 @@ type WeeklySteps = {
   weekStart: Date;
   weekEnd: Date;
   dailySteps: DaySteps[];
+  totalSteps: number;
   averageDailySteps: number;
 };
 
@@ -41,6 +42,8 @@ const USDC_ABI = [
   'function balanceOf(address owner) view returns (uint256)',
 ];
 const BASE_CHAIN_ID = 8453;
+
+const cardColors = ['$blue9', '$purple9', '$green9', '$orange9', '$pink9'];
 
 export default function ProfileScreen() {
   const queryClient = useQueryClient();
@@ -118,6 +121,10 @@ export default function ProfileScreen() {
           currentWeek.averageDailySteps =
             currentWeek.dailySteps.reduce((sum, day) => sum + day.steps, 0) /
             currentWeek.dailySteps.length;
+          currentWeek.totalSteps = currentWeek.dailySteps.reduce(
+            (sum, day) => sum + day.steps,
+            0,
+          );
           weeks.push(currentWeek);
         }
         const weekStart = new Date(step.date);
@@ -127,6 +134,7 @@ export default function ProfileScreen() {
           weekStart,
           weekEnd,
           dailySteps: [],
+          totalSteps: 0,
           averageDailySteps: 0,
         };
       }
@@ -188,33 +196,53 @@ export default function ProfileScreen() {
           <XStack gap={12}>
             <YStack
               flex={1}
-              bg="lightgrey"
+              bg="#ededed"
               p={12}
               borderRadius={10}
               alignItems="center"
               justifyContent="space-between"
+              shadowColor={'darkgrey'}
+              shadowRadius={3}
+              shadowOpacity={0.3}
               gap={5}
             >
-              <Text fontSize={28} fontWeight="semibold">
+              <Text fontSize={28} fontWeight="semibold" color={'black'}>
                 {`0`}
               </Text>
-              <Text fontSize={12}>Competitions</Text>
+              <Text
+                fontSize={16}
+                fontWeight={'bold'}
+                color="black"
+                opacity={0.6}
+              >
+                Competitions
+              </Text>
             </YStack>
             <YStack
               flex={1}
-              bg="lightgrey"
+              bg="$blue10"
               p={12}
               borderRadius={10}
               alignItems="center"
               justifyContent="space-between"
+              shadowColor={'grey'}
+              shadowRadius={3}
+              shadowOpacity={0.3}
               gap={5}
             >
               {usdcBalance && (
-                <Text fontSize={28} fontWeight="semibold">
+                <Text fontSize={28} fontWeight="semibold" color={'white'}>
                   {`$${Number(usdcBalance.formatted).toFixed(2)}`}
                 </Text>
               )}
-              <Text fontSize={12}>USDC</Text>
+              <Text
+                fontSize={16}
+                fontWeight={'semibold'}
+                color="white"
+                opacity={0.9}
+              >
+                USDC
+              </Text>
             </YStack>
 
             {/* <YStack
@@ -236,32 +264,55 @@ export default function ProfileScreen() {
 
           <Separator />
 
-          <Text fontSize={18} fontWeight={'semibold'}>
+          <Text fontSize={20} fontWeight={'semibold'}>
             Your Steps
           </Text>
           {weeklyStepsData ? (
-            <YStack flexWrap="wrap" flexDirection="row" gap={8}>
+            <YStack flexWrap="wrap" flexDirection="row" gap={16}>
               {weeklyStepsData.map((week, index) => (
                 <YStack
                   key={index}
                   width="100%"
                   alignItems="center"
-                  p={8}
-                  bg="lightgrey"
-                  gap={5}
-                  borderRadius={8}
+                  p={16}
+                  bg={cardColors[index % cardColors.length]}
+                  shadowColor={'darkgrey'}
+                  shadowRadius={3}
+                  shadowOpacity={0.3}
+                  gap={16}
+                  borderRadius={10}
                 >
-                  <Text fontSize={14}>
-                    {`Week of ${week.weekStart.toLocaleDateString()} - ${week.weekEnd.toLocaleDateString()}`}
-                  </Text>
-                  <Text fontSize={24} fontWeight={'semibold'}>
-                    {`Average: ${week.averageDailySteps.toLocaleString(
-                      'en-US',
-                      {
-                        maximumFractionDigits: 0,
-                      },
-                    )}`}
-                  </Text>
+                  <YStack width="100%" gap={5}>
+                    <Text fontSize={20} fontWeight={'semibold'} color="white">
+                      {`Week of ${week.weekStart.toLocaleDateString()} - ${week.weekEnd.toLocaleDateString()}`}
+                    </Text>
+                    <Text
+                      fontSize={16}
+                      fontWeight={'semibold'}
+                      color="white"
+                      opacity={0.8}
+                    >
+                      {`Average # steps per day: ${week.averageDailySteps.toLocaleString(
+                        'en-US',
+                        {
+                          maximumFractionDigits: 0,
+                        },
+                      )}`}
+                    </Text>
+                    <Text
+                      fontSize={16}
+                      fontWeight={'semibold'}
+                      color="white"
+                      opacity={0.8}
+                    >
+                      {`Total # steps: ${week.totalSteps.toLocaleString(
+                        'en-US',
+                        {
+                          maximumFractionDigits: 0,
+                        },
+                      )}`}
+                    </Text>
+                  </YStack>
                   <YStack flexWrap="wrap" flexDirection="row" gap={8}>
                     {week.dailySteps.map((day, dayIndex) => (
                       <YStack
@@ -269,18 +320,22 @@ export default function ProfileScreen() {
                         width="48%"
                         alignItems="center"
                         p={8}
-                        bg="lightgrey"
+                        bg="#FFFFFF40"
                         gap={5}
                         borderRadius={8}
                       >
-                        <Text fontSize={14}>
+                        <Text fontSize={16} color="white" opacity={0.8}>
                           {day.date.toLocaleString(undefined, {
                             weekday: 'short',
                             month: 'short',
                             day: 'numeric',
                           })}
                         </Text>
-                        <Text fontSize={24} fontWeight={'semibold'}>
+                        <Text
+                          fontSize={26}
+                          fontWeight={'semibold'}
+                          color="white"
+                        >
                           {day.steps.toLocaleString('en-US', {
                             maximumFractionDigits: 0,
                           })}

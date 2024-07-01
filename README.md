@@ -3,7 +3,7 @@
 
 ### step competitions on base, with no ponzinomics.
 
-![stepfunbanner](https://github.com/spenciefy/step-fun/assets/3144112/fff8e94f-2edd-4b10-81ea-5ddfaddbd30a)
+![stepbanner](https://github.com/spenciefy/step-fun/assets/3144112/4fbe52d9-e96f-4465-b667-29943149b51d)
 
 ## How it works
 1. create a competition and set the entry fee
@@ -25,7 +25,6 @@ React Native app repo forked from another private project. Below is the general 
 - Created with `create-expo-app`, but using development builds outside of Expo Go because we use native modules
 - `expo-router` for screen routing based on file paths
 - [Tamagui](https://tamagui.dev/) for UI components
-- React Query and Axios for API and data management
 - EAS build service for deployment
 
 ## Installation

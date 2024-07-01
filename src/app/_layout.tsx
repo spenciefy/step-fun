@@ -22,6 +22,10 @@ import {
 import { Stack } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native';
+import AppleHealthKit, {
+  HealthKitPermissions,
+  HealthValue,
+} from 'react-native-health';
 import { TamaguiProvider, Theme } from 'tamagui';
 import { WagmiProvider } from 'wagmi';
 import config from '../../tamagui.config';
@@ -88,30 +92,30 @@ export default function Layout() {
           SplashScreen.hideAsync();
 
           // Init healhkit on start - prob should eventually move this to a permissions button
-          // let options: HealthKitPermissions = {
-          //   permissions: {
-          //     read: [
-          //       AppleHealthKit.Constants.Permissions.Steps,
-          //       AppleHealthKit.Constants.Permissions.StepCount,
-          //       AppleHealthKit.Constants.Permissions.DistanceWalkingRunning,
-          //       AppleHealthKit.Constants.Permissions.ActiveEnergyBurned,
-          //     ],
-          //     write: [],
-          //   },
-          // };
+          let options: HealthKitPermissions = {
+            permissions: {
+              read: [
+                AppleHealthKit.Constants.Permissions.Steps,
+                AppleHealthKit.Constants.Permissions.StepCount,
+                AppleHealthKit.Constants.Permissions.DistanceWalkingRunning,
+                AppleHealthKit.Constants.Permissions.ActiveEnergyBurned,
+              ],
+              write: [],
+            },
+          };
 
-          // AppleHealthKit.initHealthKit(
-          //   options,
-          //   (err: string, results: HealthValue) => {
-          //     if (err) {
-          //       console.log('error initializing Healthkit: ', err);
-          //       return;
-          //     }
+          AppleHealthKit.initHealthKit(
+            options,
+            (err: string, results: HealthValue) => {
+              if (err) {
+                console.log('error initializing Healthkit: ', err);
+                return;
+              }
 
-          //     console.log('Healthkit initialized');
-          //     // Healthkit is initialized...
-          //   },
-          // );
+              console.log('Healthkit initialized');
+              // Healthkit is initialized...
+            },
+          );
 
           resolve(null);
         }, 2000),

@@ -5,7 +5,7 @@ import { Text, YStack } from 'tamagui';
 
 import { useWeb3Modal } from '@web3modal/wagmi-react-native';
 import { useTranslation } from 'react-i18next';
-import { FlatList } from 'react-native';
+import { FlatList, Pressable } from 'react-native';
 import { Image, XStack } from 'tamagui';
 import { useReadContract } from 'wagmi';
 import { STEP_DOT_FUN_CONTRACT_ADDRESS } from '../../constants';
@@ -85,40 +85,115 @@ export default function HomeScreen() {
             }}
             asChild
           >
-            <YStack
-              mx={16}
-              mt={16}
-              borderRadius={8}
-              backgroundColor="white"
-              shadowColor="black"
-              shadowOpacity={0.2}
-              shadowRadius={4}
-              shadowOffset={{ width: 0, height: 2 }}
-            >
-              <Image
-                source={{ uri: item.bannerImageUrl }}
-                style={{
-                  width: '100%',
-                  height: 200,
-                  borderTopLeftRadius: 8,
-                  borderTopRightRadius: 8,
-                }}
-              />
-              <YStack padding={16} gap={8}>
-                <Text fontWeight="bold" fontSize={24} color={'black'}>
-                  {item.name}
-                </Text>
-                <Text fontSize={16} color={'black'}>
-                  {`Start Time: ${item.startTime.toLocaleString()}`}
-                </Text>
-                <Text fontSize={16} color={'black'}>
-                  {`End Time: ${item.endTime.toLocaleString()}`}
-                </Text>
-                <Text fontSize={16} color={'black'}>
-                  {`Entry Fee: $${item.entryFeeUsd}`}
-                </Text>
+            <Pressable>
+              <YStack
+                mx={16}
+                mt={16}
+                borderRadius={8}
+                backgroundColor="white"
+                shadowColor="black"
+                shadowOpacity={0.2}
+                shadowRadius={4}
+                shadowOffset={{ width: 0, height: 2 }}
+              >
+                <Image
+                  source={{ uri: item.bannerImageUrl }}
+                  style={{
+                    width: '100%',
+                    height: 200,
+                    borderTopLeftRadius: 8,
+                    borderTopRightRadius: 8,
+                  }}
+                />
+                <YStack padding={16} gap={8}>
+                  <Text fontWeight="bold" fontSize={24} color={'black'}>
+                    {item.name}
+                  </Text>
+                  <Text fontSize={16} color={'black'}>
+                    {`Starts: ${item.startTime.toLocaleString()}`}
+                  </Text>
+                  <Text fontSize={16} color={'black'}>
+                    {`Ends: ${item.endTime.toLocaleString()}`}
+                  </Text>
+
+                  <XStack gap={8}>
+                    <YStack
+                      flex={1}
+                      bg="$blue10"
+                      p={12}
+                      borderRadius={10}
+                      alignItems="center"
+                      justifyContent="space-between"
+                      shadowColor={'grey'}
+                      shadowRadius={3}
+                      shadowOpacity={0.3}
+                      gap={5}
+                    >
+                      <Text fontSize={24} fontWeight="semibold" color={'white'}>
+                        {`$${item.entryFeeUsd}`}
+                      </Text>
+
+                      <Text
+                        fontSize={16}
+                        fontWeight={'semibold'}
+                        color="white"
+                        opacity={0.9}
+                      >
+                        Entry Fee
+                      </Text>
+                    </YStack>
+                    <YStack
+                      flex={1}
+                      bg="#ededed"
+                      p={12}
+                      borderRadius={10}
+                      alignItems="center"
+                      justifyContent="space-between"
+                      shadowColor={'darkgrey'}
+                      shadowRadius={3}
+                      shadowOpacity={0.3}
+                      gap={5}
+                    >
+                      <Text fontSize={24} fontWeight="semibold" color={'black'}>
+                        {`${item.playerAddresses.length}`}
+                      </Text>
+                      <Text
+                        fontSize={16}
+                        fontWeight={'bold'}
+                        color="black"
+                        opacity={0.6}
+                      >
+                        Players
+                      </Text>
+                    </YStack>
+                    <YStack
+                      flex={1}
+                      bg="#ededed"
+                      p={12}
+                      borderRadius={10}
+                      alignItems="center"
+                      justifyContent="space-between"
+                      shadowColor={'darkgrey'}
+                      shadowRadius={3}
+                      shadowOpacity={0.3}
+                      gap={5}
+                    >
+                      <Text fontSize={24} fontWeight="semibold" color={'black'}>
+                        {`$${item.totalBalance}`}
+                      </Text>
+                      <Text
+                        fontSize={16}
+                        fontWeight={'bold'}
+                        color="black"
+                        opacity={0.6}
+                      >
+                        Prize Pool
+                      </Text>
+                    </YStack>
+                  </XStack>
+                </YStack>
               </YStack>
-            </YStack>
+            </Pressable>
           </Link>
         )}
       />

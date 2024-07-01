@@ -21,6 +21,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import AppleHealthKit from 'react-native-health';
 import { useAccount, useBalance } from 'wagmi';
+import { BASE_CHAIN_ID, USDC_BASE_CONTRACT_ADDRESS } from '../../constants';
 import { useStyle } from '../../hooks/useStyle';
 
 type DaySteps = {
@@ -35,13 +36,6 @@ type WeeklySteps = {
   totalSteps: number;
   averageDailySteps: number;
 };
-
-const USDC_BASE_CONTRACT_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913';
-const USDC_ABI = [
-  // Only the balanceOf function is needed for this example
-  'function balanceOf(address owner) view returns (uint256)',
-];
-const BASE_CHAIN_ID = 8453;
 
 const cardColors = ['$blue9', '$purple9', '$green9', '$orange9', '$pink9'];
 
@@ -165,11 +159,21 @@ export default function ProfileScreen() {
         </XStack>
         <YStack gap={16}>
           <XStack alignItems="center" gap={16}>
-            <Circle size={100} bg={'lightgrey'} />
+            {isDisconnected ? (
+              <Circle size={100} bg={'lightgrey'} />
+            ) : (
+              <Image
+                source={{
+                  uri: 'https://gateway.ipfs.io/ipfs/bafkreifsfa7dqltepulf45uahj32zbp6jahcaphzjki26bdd5bzz5unmii',
+                }}
+                style={{ width: 100, height: 100, borderRadius: 50 }}
+              />
+            )}
+
             <YStack gap={10} justifyContent="space-between">
               <YStack gap={5}>
                 <Text fontSize={24} fontWeight={'bold'}>
-                  Spencer
+                  {isDisconnected ? 'Player' : 'spenciefy.eth'}
                 </Text>
 
                 <XStack alignItems="center" gap={3}>
@@ -235,11 +239,11 @@ export default function ProfileScreen() {
               shadowOpacity={0.3}
               gap={5}
             >
-              {usdcBalance && (
-                <Text fontSize={28} fontWeight="semibold" color={'white'}>
-                  {`$${Number(usdcBalance.formatted).toFixed(2)}`}
-                </Text>
-              )}
+              <Text fontSize={28} fontWeight="semibold" color={'white'}>
+                {`$${
+                  usdcBalance ? Number(usdcBalance.formatted).toFixed(2) : 0
+                }`}
+              </Text>
               <Text
                 fontSize={16}
                 fontWeight={'semibold'}

@@ -1,12 +1,19 @@
 # step.fun
 
-React Native app repo forked from another private project:
+step competitions on base, with no ponzinomics.
+
+1. create a competition and set the entry fee
+2. anyone can "buy in" to the step competition
+3. player with most steps can claim the prize pool of all entry fees
+
+(not fully complete, hacked together the concept on the last day of this buildathon)
+
+React Native app repo forked from another private project. Below is the general running readme (might not really work)
 
 - Created with `create-expo-app`, but using development builds outside of Expo Go because we use native modules
 - `expo-router` for screen routing based on file paths
 - [Tamagui](https://tamagui.dev/) for UI components
 - React Query and Axios for API and data management
-- Simple `React.Context` for Auth session and refresh token management (no Redux... yet)
 - EAS build service for deployment
 
 ## Installation

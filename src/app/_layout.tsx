@@ -11,17 +11,21 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import * as Linking from 'expo-linking';
 import { getLocales } from 'expo-localization';
-import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 
-import { base, mainnet } from '@wagmi/core/chains';
+import { base } from '@wagmi/core/chains';
 import {
   Web3Modal,
   createWeb3Modal,
   defaultWagmiConfig,
 } from '@web3modal/wagmi-react-native';
+import { Stack } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native';
+import AppleHealthKit, {
+  HealthKitPermissions,
+  HealthValue,
+} from 'react-native-health';
 import { TamaguiProvider, Theme } from 'tamagui';
 import { WagmiProvider } from 'wagmi';
 import config from '../../tamagui.config';
@@ -42,7 +46,7 @@ const metadata = {
   },
 };
 
-const chains = [mainnet, base] as const;
+const chains = [base] as const;
 
 const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
 
@@ -50,14 +54,11 @@ const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
 createWeb3Modal({
   projectId,
   wagmiConfig,
-  defaultChain: mainnet,
+  defaultChain: base,
   enableAnalytics: true, // Optional - defaults to your Cloud configuration
   tokens: {
-    1: {
-      address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-    },
     8453: {
-      address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', // USDC
+      address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', // USDC but this feature doesnt seem to work
     },
   },
 });
@@ -89,6 +90,33 @@ export default function Layout() {
       await new Promise((resolve) =>
         setTimeout(() => {
           SplashScreen.hideAsync();
+
+          // Init healhkit on start - prob should eventually move this to a permissions button
+          let options: HealthKitPermissions = {
+            permissions: {
+              read: [
+                AppleHealthKit.Constants.Permissions.Steps,
+                AppleHealthKit.Constants.Permissions.StepCount,
+                AppleHealthKit.Constants.Permissions.DistanceWalkingRunning,
+                AppleHealthKit.Constants.Permissions.ActiveEnergyBurned,
+              ],
+              write: [],
+            },
+          };
+
+          AppleHealthKit.initHealthKit(
+            options,
+            (err: string, results: HealthValue) => {
+              if (err) {
+                console.log('error initializing Healthkit: ', err);
+                return;
+              }
+
+              console.log('Healthkit initialized');
+              // Healthkit is initialized...
+            },
+          );
+
           resolve(null);
         }, 2000),
       );
@@ -109,7 +137,9 @@ export default function Layout() {
             <ThemeProvider
               value={colorScheme === 'light' ? DefaultTheme : DarkTheme}
             >
-              <Slot />
+              <Stack>
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              </Stack>
               <Web3Modal />
             </ThemeProvider>
           </Theme>

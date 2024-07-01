@@ -85,8 +85,7 @@ Some tips:
 
 1. All screens live under `src/app`.
 2. Root layout (first rendered screen)is `app/_layout.tsx`. This file contains all providers (theme, api)
-3. We use conditional auth based routing. `app/(app)/_layout.tsx` is a protected route, if the user auth `sessionToken` and `refreshToken` is not set, the app redirects to `/app/onboarding`
-4. Currently state management is handled with `Context` in `/api/auth/context.ts`, where session and refresh tokens are persisted. Any user data is fetched from API with `react-query` (`useUser()` hook)
+   3
 
 ## TODOs
 

@@ -1,14 +1,26 @@
+
 # step.fun
 
-step competitions on base, with no ponzinomics.
+### step competitions on base, with no ponzinomics.
 
+![stepfunbanner](https://github.com/spenciefy/step-fun/assets/3144112/fff8e94f-2edd-4b10-81ea-5ddfaddbd30a)
+
+## How it works
 1. create a competition and set the entry fee
 2. anyone can "buy in" to the step competition
 3. player with most steps can claim the prize pool of all entry fees
 
-(not fully complete, hacked together the concept on the last day of this buildathon)
+(not fully feature complete, hacked together the concept on the last day of this buildathon)
+
+
+## Tech
+- React Native app to access Apple HealthKit step data
+- Used build-onchain-app-template to get help writing and deploying a contract to base mainnet (https://basescan.org/address/0x593c34f5c79bbb5ba3b45dfe77c8630545f32f05)
+- WalletConnect AppKit SDK
 
 React Native app repo forked from another private project. Below is the general running readme (might not really work)
+
+---
 
 - Created with `create-expo-app`, but using development builds outside of Expo Go because we use native modules
 - `expo-router` for screen routing based on file paths
